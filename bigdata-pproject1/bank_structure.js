@@ -138,8 +138,8 @@ var client = {
                 problem_with_bank_account = true;
                 return;
             }
-            element['currency'] = "BGN";
             if (!check_if_exists(element.currency)) {
+                element['currency'] = "BGN";
             }
         });
         if (problem_with_bank_account) {
@@ -212,3 +212,28 @@ db.employee.update({"_id" : 4}, {$set : {"additional_name": "Sullivan"}})
 
 db.employee.find({$or:[{first_name : {$regex : "l"}},{last_name : {$regex : "l"}}, {aditional_name : {$regex : "l"}}]});
 
+//------------------------
+
+
+
+db.work_history.insert({_id:1, employee_id:1, department_id:1, start_date:"2012-05-03", end_date:"2014-12-03"})
+db.work_history.insert({_id:3, employee_id:2, department_id:1, start_date:"2012-05-03", end_date:"2014-12-03"})
+db.work_history.insert({_id:5, employee_id:2, department_id:2, start_date:"2014-12-03"})
+db.work_history.insert({_id:2, employee_id:1, department_id:3, start_date:"2014-12-03"})
+db.work_history.insert({_id:4, employee_id:3, department_id:2, start_date:"2015-05-12", end_date:"2019-09-12"})
+db.work_history.insert({_id:7, employee_id:3, department_id:1, start_date:"2019-09-12"})
+db.work_history.insert({_id:6, employee_id:4, department_id:1, start_date:"2018-05-14"})
+
+
+//служителите, които са работили в повече от един отдел врамките на последните два месеца
+db.work_history.find({$and:[{_id : {db.work_history.find({start_date : {$gt : "2019-08-01"}}, {_id:1})}}},{end_date : {$gt : "2019-07-31"}}]});
+
+db.work_history.find({start_date : {$gt : "2019-08-01"}},{_id:0, employee_id:1}).toArray().forEach(function (element) {
+    var employee = db.work_history.findOne({$and:[{end_date : {$gt : "2019-08-01"}}, {employee_id: element.employee_id}]}, {employee_id:1, _id:0});
+    print("Id of person worked in more than one department in the past 2 months: "+ employee.employee_id)
+});
+
+
+
+//Намерете всички служитери които имат заплата в интервала 2000 – 3000
+db.employee.find({$and:[{salary : {$lt: 3000}}, {salary:{$gt:2000}}]})
