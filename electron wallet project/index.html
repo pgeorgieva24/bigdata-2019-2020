@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Unichain</title>
+    <script src = "https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script> 
+    <style>
+      .btn-group button{
+        display: block;
+        width: 100%;
+        padding: 10px 24px;
+      }
+      .btn-group button:focus {
+        background-color: #4CAF50;
+      }
+      #wallet-transaction-panel{
+        display: flex;
+        flex-direction: row;
+        height:100%;
+      }
+      #wallets-list{
+        display:flex;
+        flex-direction: column;
+        padding:10px 24px;
+        justify-items: stretch;
+
+      }
+      button{
+        padding:10px 24px;
+        width:100%;
+      }
+      /*for the form */
+
+      /* The popup form - hidden by default */
+      .form-popup {
+        /*display: none;*/
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        border: 3px solid #f1f1f1;
+        z-index: 9;
+      }
+
+      /* Add styles to the form container */
+      .form-container {
+        max-width: 300px;
+        padding: 10px;
+        background-color: white;
+      }
+
+      /* Full-width input fields */
+      .form-container input[type=number]  {
+        width: 100%;
+        padding: 15px;
+        margin: 5px 0 22px 0;
+        border: none;
+        background: #f1f1f1;
+        box-sizing: border-box;
+      }
+
+      /* When the inputs get focus, do something */
+      .form-container input[type=number]:focus {
+        background-color: #ddd;
+        outline: none;
+      }
+
+      /* Set a style for the submit/login button */
+      .form-container .btn {
+        background-color: #4CAF50;
+        color: white;
+        padding: 16px 20px;
+        border: none;
+        cursor: pointer;
+        width: 100%;
+        margin-bottom:10px;
+        opacity: 0.8;
+      }
+
+      /* Add a red background color to the cancel button */
+      .form-container .cancel {
+        background-color: red;
+      }
+
+      /* Add some hover effects to buttons */
+      .form-container .btn:hover, .open-button:hover {
+        opacity: 1;
+      }
+      h1{
+        word-wrap:break-word;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Unichain</h1>
+    <div id="wallet-panel">
+      <span>wallet id</span>
+      <span id="wallet-id"></span>
+      <br>
+      <span>currencies</span>
+      <span id="currencies"></span>
+    </div>
+
+    <div id="wallet-transaction-panel">
+      <div class="btn-group" id="currencies-menu">
+      </div>
+      <div id="wallets-list">
+      </div>
+    </div>
+
+    <div class="form-popup" >
+      <form class="form-container" id="send-money-form" onsubmit="return checkForm()">
+        <h1></h1>
+        <input type="hidden" id="curerncy-name" name="curerncy" value="">
+        <label for="Amount"><b>Amount</b></label>
+        <input type="number" min="1" name="amount" id="amount" required>
+
+        <button type="submit" class="btn">Send</button>
+        <button type="button" class="btn cancel" onclick="closeSendingMoneyForm()">Close</button>
+      </form>
+    </div>    
+
+    <script src="./renderer.js"></script>
+  </body>
+</html>
